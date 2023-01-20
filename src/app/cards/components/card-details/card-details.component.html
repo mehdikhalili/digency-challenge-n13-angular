@@ -1,0 +1,39 @@
+<div class="container" *ngIf="card && !isLoading">
+  <div class="row d-flex justify-content-center my-5">
+    <div class="col-xl-4 col-lg-5 col-md-6 col-sm-10 col-11 card">
+      <h4 class="text-center pb-3 my-4 border-bottom">Détails de la carte #{{ card.id }}</h4>
+      <div class="row container mb-4">
+        <div class="col-6">
+          <div class="d-flex justify-content-center">
+            <img [src]="card.image" class="rounded-circle">
+          </div>
+        </div>
+        <div class="col-6 text-right pt-3">
+          <p><strong>{{ card.prenom }} {{ card.nom }}</strong></p>
+          <p><strong>{{ card.prenomAr }} {{ card.nomAr }}</strong></p>
+        </div>
+      </div>
+      <p class="text-center">Né le : <strong><app-formatted-date [date]="card.dateNaissance"></app-formatted-date></strong></p>
+      <p class="text-center">CIN : <strong>{{ card.cin }}</strong></p>
+      <p class="text-center">Profession : <strong>{{ card.profession }}</strong></p>
+      <p class="text-center">Type : <strong>{{ card.type }}</strong></p>
+      <div class="row mb-4 mt-4">
+        <div class="col-sm-6">
+          <button class="btn btn-success btn-block" (click)="onPrint()" [disabled]="isExporting">
+            <app-loading class="mr-2" *ngIf="isExporting"></app-loading>
+            <i class="fas fa-print mr-2" *ngIf="!isExporting"></i>Imprimer
+          </button>
+        </div>
+        <div class="col-sm-6">
+          <a routerLink="/cards/{{ card.id }}/edit" class="btn btn-primary btn-block">
+            <i class="fas fa-edit mr-2"></i>Modifier
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="d-flex justify-content-center mt-5" *ngIf="isLoading">
+  <app-loading [size]="'4x'"></app-loading>
+</div>
+<app-page-not-found *ngIf="notFound"></app-page-not-found>

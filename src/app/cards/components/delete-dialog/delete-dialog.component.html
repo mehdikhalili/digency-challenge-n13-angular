@@ -1,0 +1,16 @@
+<mat-toolbar class="mb-4">
+  <h4 mat-dialog-title>Supprimer une carte</h4>
+</mat-toolbar>
+
+<mat-dialog-content>
+  <p class="ml-3">Êtes-vous sûr de vouloir supprimer la carte #{{ card.id }} ?</p>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <span class="flex-spacer"></span>
+  <button mat-raised-button mat-dialog-close>Fermer</button>
+  <button mat-raised-button color="warn" class="mat-raised-button" (click)="onDelete()" [disabled]="isDeleting">
+    <app-loading *ngIf="isDeleting"></app-loading>
+    SUPPRIMER
+  </button>
+</mat-dialog-actions>

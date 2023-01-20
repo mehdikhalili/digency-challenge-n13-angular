@@ -1,0 +1,75 @@
+<div class="container mt-3">
+
+  <app-alert *ngIf="error" [color]="'danger'" [message]="error"></app-alert>
+
+  <div class="d-flex justify-content-end">
+    <a routerLink="/cards/add" class="btn btn-light">
+      <i class="fas fa-user-plus"></i> Ajouter une carte
+    </a>
+  </div>
+
+  <section class="mt-3">
+    <h5 class="text-left pl-3 mb-3">Liste des cartes</h5>
+    <div *ngIf="page && !isLoading">
+      <table class="table table-responsive-xl text-left">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Prénom</th>
+            <th>Nom</th>
+            <th class="text-right">الإسم الشخصي</th>
+            <th class="text-right">الإسم العائلي</th>
+            <th>CIN</th>
+            <th>Date de naissance</th>
+            <th>Profession</th>
+            <th>Type</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let card of page.content | paginate: {
+            id: 'cards',
+            itemsPerPage: page.size,
+            currentPage: page.number + 1,
+            totalItems: page.totalElements
+          }">
+            <td>{{ card.id }}</td>
+            <td>{{ card.prenom }}</td>
+            <td>{{ card.nom }}</td>
+            <td class="text-right">{{ card.prenomAr }}</td>
+            <td class="text-right">{{ card.nomAr }}</td>
+            <td>{{ card.cin }}</td>
+            <td><app-formatted-date [date]="card.dateNaissance"></app-formatted-date></td>
+            <td>{{ card.profession }}</td>
+            <td>{{ card.type }}</td>
+            <td class="d-flex justify-content-end">
+              <button (click)="onPrint(card.id)" class="btn btn-success btn-sm ml-1">
+                <i class="fas fa-print"></i>
+              </button>
+              <a routerLink="/cards/{{ card.id }}" class="btn btn-info btn-sm ml-1"><i class="fas fa-eye"></i></a>
+              <a routerLink="/cards/{{ card.id }}/edit" class="btn btn-warning btn-sm ml-1"><i class="fas fa-pen"></i></a>
+              <button (click)="openDeleteDialog(card)" class="btn btn-danger btn-sm ml-1"><i class="fas fa-trash"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="d-flex justify-content-end">
+        <pagination-controls id="cards" class="my-pagination"
+          (pageChange)="onPageChange($event)"
+          [maxSize]="9"
+          [directionLinks]="true"
+          [autoHide]="true"
+          [responsive]="true"
+          previousLabel="Précédent"
+          nextLabel="Suivant"
+          screenReaderPaginationLabel="Pagination"
+          screenReaderPageLabel="page"
+          screenReaderCurrentLabel="You're on page">
+        </pagination-controls>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center mt-5" *ngIf="isLoading">
+      <app-loading [size]="'3x'"></app-loading>
+    </div>
+  </section>
+</div>

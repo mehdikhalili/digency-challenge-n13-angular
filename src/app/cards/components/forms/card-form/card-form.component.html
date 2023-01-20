@@ -1,0 +1,79 @@
+<form [formGroup]="cardForm" (ngSubmit)="onSubmit()">
+  <div class="row">
+    <div class="col-6 form-group">
+      <label for="nom">Nom <app-required></app-required></label>
+      <input type="text" class="form-control" formControlName="nom" id="nom" placeholder="Nom"
+            [ngClass]="{ 'is-invalid': cardFormErrors.nom }">
+      <app-form-error [error]="cardFormErrors.nom"></app-form-error>
+    </div>
+    <div class="col-6 form-group text-right">
+      <label for="nomAr"><app-required class="mr-1"></app-required>الإسم العائلي</label>
+      <input type="text" class="form-control text-right" formControlName="nomAr" id="nomAr"
+          placeholder="الإسم العائلي بالعربية" [ngClass]="{ 'is-invalid': cardFormErrors.nomAr }">
+      <app-form-error [error]="cardFormErrors.nomAr"></app-form-error>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6 form-group">
+      <label for="prenom">Prénom <app-required></app-required></label>
+      <input type="text" class="form-control" formControlName="prenom" id="prenom" placeholder="Prénom"
+            [ngClass]="{ 'is-invalid': cardFormErrors.prenom }">
+      <app-form-error [error]="cardFormErrors.prenom"></app-form-error>
+    </div>
+    <div class="col-6 form-group text-right">
+      <label for="prenomAr"><app-required class="mr-1"></app-required>الإسم الشخصي</label>
+      <input type="text" class="form-control text-right" formControlName="prenomAr" id="prenomAr" 
+            placeholder="الإسم الشخصي بالعربية" [ngClass]="{ 'is-invalid': cardFormErrors.prenomAr }">
+      <app-form-error [error]="cardFormErrors.prenomAr"></app-form-error>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6 form-group">
+      <label for="cin">CIN <app-required></app-required></label>
+      <input type="text" class="form-control" formControlName="cin" id="cin" placeholder="CIN"
+            [ngClass]="{ 'is-invalid': cardFormErrors.cin }">
+      <app-form-error [error]="cardFormErrors.cin"></app-form-error>
+    </div>
+    <div class="col-6 form-group">
+      <label for="dateNaissance">Date de naissance <app-required></app-required></label>
+      <input type="date" class="form-control" formControlName="dateNaissance" id="dateNaissance" placeholder="Date de naissance"
+            [ngClass]="{ 'is-invalid': cardFormErrors.dateNaissance }" [max]="maxDate" min="1900-01-01">
+      <app-form-error [error]="cardFormErrors.dateNaissance"></app-form-error>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="profession">Profession <app-required></app-required></label>
+    <input type="text" class="form-control" formControlName="profession" id="profession" placeholder="Profession"
+          [ngClass]="{ 'is-invalid': cardFormErrors.profession }">
+    <app-form-error [error]="cardFormErrors.profession"></app-form-error>
+  </div>
+  <div class="form-group">
+    <label for="image">Image URL <app-required></app-required></label>
+    <input type="text" class="form-control" formControlName="image" id="image" placeholder="Image URL"
+          [ngClass]="{ 'is-invalid': cardFormErrors.image }">
+    <app-form-error [error]="cardFormErrors.image"></app-form-error>
+  </div>
+  <div class="form-row">
+    <label class="mr-3 ml-1">Type de carte <app-required></app-required></label><br>
+    <div class="form-check-inline">
+      <label class="form-check-label">
+        <input type="radio" class="form-check-input" formControlName="type" value="A">A
+      </label>
+    </div>
+    <div class="form-check-inline">
+      <label class="form-check-label">
+        <input type="radio" class="form-check-input" formControlName="type" value="B">B
+      </label>
+    </div>
+    <app-form-error [error]="cardFormErrors.type"></app-form-error>
+  </div>
+  <div class="form-row justify-content-end">
+    <div class="col-sm-5">
+      <button type="submit" class="btn btn-primary btn-block" 
+        [disabled]="cardForm.invalid || isLoading">
+        <app-loading *ngIf="isLoading"></app-loading>
+        {{ card ? 'Modifier' : 'Ajouter' }}
+      </button>
+    </div>
+  </div>
+</form>
